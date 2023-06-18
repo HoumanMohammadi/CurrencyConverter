@@ -1,8 +1,8 @@
-package model;
+package de.iav.currencyconverter.model;
 
 import java.util.List;
 
-public record CurrencyConverterResponse {
-    Object info,
-    List<RatesByDate> ratesByDates;
+public record CurrencyConverterResponse(    Object info,
+                                            List<RatesByDate> ratesByDates) {
+
 }

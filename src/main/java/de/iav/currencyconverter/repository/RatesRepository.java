@@ -1,6 +1,6 @@
-package repository;
+package de.iav.currencyconverter.repository;
 
-import model.RatesByDate;
+import de.iav.currencyconverter.model.RatesByDate;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

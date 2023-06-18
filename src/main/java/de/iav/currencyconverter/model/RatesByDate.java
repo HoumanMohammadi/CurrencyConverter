@@ -1,4 +1,4 @@
-package model;
+package de.iav.currencyconverter.model;
 
 import java.util.Date;
 
