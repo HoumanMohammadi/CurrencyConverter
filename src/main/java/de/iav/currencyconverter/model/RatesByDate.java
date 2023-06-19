@@ -1,9 +1,11 @@
 package de.iav.currencyconverter.model;
 
-import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record RatesByDate(double amount,
                           String base,
-                          Date date,
+                          String date,
+                          //@JsonProperty("rates")
                           Rate rates) {
 }

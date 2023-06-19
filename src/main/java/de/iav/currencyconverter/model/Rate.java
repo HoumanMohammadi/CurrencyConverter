@@ -1,7 +1,35 @@
 package de.iav.currencyconverter.model;
 
 public record Rate (
-               double AUD,
-               double EUR
+        double AUD,
+        double BGN,
+        double BRL,
+        double CAD,
+        double CHF,
+        double CNY,
+        double CZK,
+        double DKK,
+        double GBP,
+        double HKD,
+        double HUF,
+        double IDR,
+        double ILS,
+        double INR,
+        double ISK,
+        double JPY,
+        double KRW,
+        double MXN,
+        double MYR,
+        double NOK,
+        double NZD,
+        double PHP,
+        double PLN,
+        double RON,
+        double SEK,
+        double SGD,
+        double THB,
+        double TRY,
+        double USD,
+        double ZAR
 ) {
 }

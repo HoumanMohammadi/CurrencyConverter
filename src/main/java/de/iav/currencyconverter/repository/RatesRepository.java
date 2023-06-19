@@ -1,4 +1,4 @@
-package de.iav.currencyconverter.repository;
+/*package de.iav.currencyconverter.repository;
 
 import de.iav.currencyconverter.model.RatesByDate;
 import org.springframework.stereotype.Repository;
@@ -29,4 +29,4 @@ public class RatesRepository {
     }
 
 
-}
+}*/

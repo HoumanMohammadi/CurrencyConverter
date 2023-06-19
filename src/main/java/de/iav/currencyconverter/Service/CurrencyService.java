@@ -1,8 +1,9 @@
 package de.iav.currencyconverter.Service;
 
-import de.iav.currencyconverter.model.CurrencyConverterResponse;
+import de.iav.currencyconverter.model.Rate;
 import de.iav.currencyconverter.model.RatesByDate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -12,24 +13,20 @@ import java.util.Objects;
 @Service
 public class CurrencyService {
 
-    private final WebClient webClient;
+    private final WebClient webClient=WebClient.create("https://api.frankfurter.app/");
 
-    public CurrencyService(
-            @Value("${currency.url}")
-            String webclientUrl) {
-        webClient = WebClient.create(webclientUrl);
-    }
-
-
-    public List<RatesByDate> getAllRates() {
-        CurrencyConverterResponse responseEntity = webClient.get()
-                .uri("/latest")
+    public RatesByDate getRatesByData(){
+        ResponseEntity<RatesByDate> responseEntity= webClient.get()
+                .uri("latest")
                 .retrieve()
-                .toEntity(CurrencyConverterResponse.class)
-                .block()
-                .getBody();
+                .toEntity(RatesByDate.class)
+                .block();
 
-        Objects.requireNonNull(responseEntity);
-        return responseEntity.ratesByDates();
+        RatesByDate ratesByDate=Objects.requireNonNull(responseEntity).getBody();
+
+        assert ratesByDate != null;
+        return new RatesByDate(ratesByDate.amount()+15
+        , ratesByDate.base(), ratesByDate.date(), ratesByDate.rates());
+
     }
 }
