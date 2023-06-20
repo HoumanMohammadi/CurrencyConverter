@@ -1,8 +1,8 @@
 package de.iav.currencyconverter.Service;
 
-import de.iav.currencyconverter.model.Rate;
 import de.iav.currencyconverter.model.RatesByDate;
-import org.springframework.beans.factory.annotation.Value;
+import de.iav.currencyconverter.repository.RatesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,11 +13,17 @@ import java.util.Objects;
 @Service
 public class CurrencyService {
 
-    private final WebClient webClient=WebClient.create("https://api.frankfurter.app/");
+    private final RatesRepository ratesRepository;
 
-    public RatesByDate getRatesByData(){
+    private final WebClient webClient=WebClient.create("https://api.frankfurter.app/");
+    @Autowired
+    public CurrencyService(RatesRepository ratesRepository) {
+        this.ratesRepository = ratesRepository;
+    }
+
+    public List<RatesByDate> getRatesByData(){
         ResponseEntity<RatesByDate> responseEntity= webClient.get()
-                .uri("latest")
+                .uri("2023-06-01..2023-06-19")
                 .retrieve()
                 .toEntity(RatesByDate.class)
                 .block();
@@ -25,8 +31,9 @@ public class CurrencyService {
         RatesByDate ratesByDate=Objects.requireNonNull(responseEntity).getBody();
 
         assert ratesByDate != null;
-        return new RatesByDate(ratesByDate.amount()+15
-        , ratesByDate.base(), ratesByDate.date(), ratesByDate.rates());
+        ratesRepository.addRates(ratesByDate);
+        System.out.println(ratesRepository.list());
+        return ratesRepository.list();
 
     }
 }
